@@ -12,7 +12,24 @@ public class TruongPhong extends NhanVien {
     TruongPhong() {
 
     }
+    public Double getTrachnhiem() {
+        return trachnhiem;
+    }
 
+    public void setTrachnhiem() {
+        System.out.println(">> Cap nhat luong trach nhiem: ");
+        do {
+            try {
+                System.out.print(">> Nhap luong trach nhiem: ");
+                this.trachnhiem = Double.parseDouble(sc.nextLine());
+                break;
+            } catch (Exception e) {
+                System.out.print("Vui long nhap lai!\n");
+            }
+        } while (true);
+        System.out.println("\t>>> CAP NHAT THANH CONG <<<");
+    }
+    
     TruongPhong(String manv, String hoten, Double luong, String chucvu, Double trachnhiem) {
         super(manv, hoten, luong, chucvu);
         this.trachnhiem = trachnhiem;

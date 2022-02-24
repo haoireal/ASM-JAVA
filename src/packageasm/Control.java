@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
+import javax.xml.transform.OutputKeys;
 
 public class Control extends NhanVien {
     static Scanner sc = new Scanner(System.in);
     public static ArrayList<NhanVien> nhanvien = new ArrayList<NhanVien>();
 
     // ================Nhập Thông Tin==============
+
     public void nhapThongTin() {
         do {
             System.out.print(">> Nhap ma nhan vien: ");
@@ -144,89 +146,164 @@ public class Control extends NhanVien {
         System.out.print(">> Nhap ma nhan vien can cap nhat: ");
         String timma = sc.nextLine();
         int flag = 0;
+        int temp0 = 0;
         for (NhanVien item : nhanvien) {
             if (item.getManv().equalsIgnoreCase(timma)) {
+
+                temp0++;
                 System.out.println(">>> DA TIM THAY!! TIEN HANH CAP NHAT");
-                System.out.print(">> Nhap ma nhan vien: ");
-                String msnv = sc.nextLine();
+                System.out.println(
+                        "\t\t1. Cap nhat toan bo thong tin!\n\t\t2. Cap nhat tuy chon\n\t\t3. Cap nhat chuc vu");
+                int chon = (int) Double.parseDouble(sc.nextLine());
+                switch (chon) {
+                    case 1: {
+                        System.out.print(">> Nhap ma nhan vien: ");
+                        String msnv = sc.nextLine();
 
-                System.out.print(">> Nhap ten nhan vien: ");
-                String name = sc.nextLine();
-                Double luong = 0.0;
-                do {
-                    try {
-                        System.out.print(">> Nhap luong nhan vien: ");
-                        luong = Double.parseDouble(sc.nextLine());
-                        break;
-                    } catch (Exception e) {
-                        System.out.print("Vui long nhap lai!\n");
-                    }
-                } while (true);
-                int chuc = 0;
-                do {
-                    int temp = 0;
-                    do {
-                        try {
-                            System.out.print(">> Nhap chuc vu: \n(1) Truong Phong\n(2) Tiep Thi\n(3) Hanh Chinh\n>> ");
-                            chuc = Integer.parseInt(sc.nextLine());
-                            break;
-                        } catch (Exception e) {
-                            System.out.print("Vui long nhap lai!\n");
+                        System.out.print(">> Nhap ten nhan vien: ");
+                        String name = sc.nextLine();
+                        Double luong = 0.0;
+                        do {
+                            try {
+                                System.out.print(">> Nhap luong nhan vien: ");
+                                luong = Double.parseDouble(sc.nextLine());
+                                break;
+                            } catch (Exception e) {
+                                System.out.print("Vui long nhap lai!\n");
+                            }
+                        } while (true);
+                        int chuc = 0;
+                        int temp = 0;
+                        do {
+                            try {
+                                System.out.print(
+                                        ">> Nhap chuc vu: \n(1) Truong Phong\n(2) Tiep Thi\n(3) Hanh Chinh\n>> ");
+                                chuc = Integer.parseInt(sc.nextLine());
+                                break;
+                            } catch (Exception e) {
+                                System.out.print("Vui long nhap lai!\n");
+                            }
+                        } while (true);
+
+                        switch (chuc) {
+                            case 1:
+                                Double luongtrachnhiem = 0.0;
+                                do {
+                                    try {
+                                        System.out.print(">> Nhap luong trach nhiem: ");
+                                        luongtrachnhiem = Double.parseDouble(sc.nextLine());
+                                        break;
+                                    } catch (Exception e) {
+                                        System.out.print("Vui long nhap lai!\n");
+                                    }
+                                } while (true);
+                                NhanVien nvtp = new TruongPhong(msnv, name, luong, "Truong Phong", luongtrachnhiem);
+                                nhanvien.set(flag, nvtp);
+                                break;
+                            case 2:
+                                Double doanhso = 0.0;
+                                do {
+
+                                    try {
+                                        System.out.print(">> Nhap doanh so tiep thi: ");
+                                        doanhso = Double.parseDouble(sc.nextLine());
+                                        break;
+                                    } catch (Exception e) {
+                                        System.out.print("Vui long nhap lai!\n");
+                                    }
+                                } while (true);
+                                NhanVien nvtt = new TiepThi(msnv, name, luong, "Tiep Thi", doanhso);
+                                nhanvien.set(flag, nvtt);
+                                break;
+                            case 3:
+                                NhanVien nvhc = new NhanVien(msnv, name, luong, "Hanh Chinh");
+                                nhanvien.set(flag, nvhc);
+                                break;
+                            default:
+                                System.out.println("Khong hop le! Nhap lai");
+                                temp++;
+                                break;
                         }
-                    } while (true);
-
-                    switch (chuc) {
-                        case 1:
-                            Double luongtrachnhiem = 0.0;
-                            do {
-                                try {
-                                    System.out.print(">> Nhap luong trach nhiem: ");
-                                    luongtrachnhiem = Double.parseDouble(sc.nextLine());
-                                    break;
-                                } catch (Exception e) {
-                                    System.out.print("Vui long nhap lai!\n");
-                                }
-                            } while (true);
-                            NhanVien nvtp = new TruongPhong(msnv, name, luong, "Truong Phong", luongtrachnhiem);
-                            nhanvien.set(flag, nvtp);
+                        if (temp == 0) {
                             break;
-                        case 2:
-                            Double doanhso = 0.0;
-                            do {
-
-                                try {
-                                    System.out.print(">> Nhap doanh so tiep thi: ");
-                                    doanhso = Double.parseDouble(sc.nextLine());
-                                    break;
-                                } catch (Exception e) {
-                                    System.out.print("Vui long nhap lai!\n");
-                                }
-                            } while (true);
-                            NhanVien nvtt = new TiepThi(msnv, name, luong, "Tiep Thi", doanhso);
-                            nhanvien.set(flag, nvtt);
-                            break;
-                        case 3:
-                            NhanVien nvhc = new NhanVien(msnv, name, luong, "Hanh Chinh");
-                            nhanvien.set(flag, nvhc);
-                            break;
-                        default:
-                            System.out.println("Khong hop le! Nhap lai");
-                            temp++;
-                            break;
+                        }
                     }
-                    if (temp == 0) {
                         break;
+                    case 2:
+                        item.CapNhatTheoYC();
+                        break;
+                    case 3: {
+                        System.out.println("\t\t>> Chuc vu hien tai: "+item.getChucvu());
+                        int chuc = 0;
+                        int temp = 0;
+                        do {
+                            try {
+                                System.out.print(
+                                        ">> Nhap chuc vu: \n(1) Truong Phong\n(2) Tiep Thi\n(3) Hanh Chinh\n>> ");
+                                chuc = Integer.parseInt(sc.nextLine());
+                                break;
+                            } catch (Exception e) {
+                                System.out.print("Vui long nhap lai!\n");
+                            }
+                        } while (true);
+
+                        switch (chuc) {
+                            case 1:
+                                Double luongtrachnhiem = 0.0;
+                                do {
+                                    try {
+                                        System.out.print(">> Nhap luong trach nhiem: ");
+                                        luongtrachnhiem = Double.parseDouble(sc.nextLine());
+                                        break;
+                                    } catch (Exception e) {
+                                        System.out.print("Vui long nhap lai!\n");
+                                    }
+                                } while (true);
+                                NhanVien nvtp = new TruongPhong(item.getManv(), item.getHoten(), item.getLuong(), "Truong Phong", luongtrachnhiem);
+                                nhanvien.set(flag, nvtp);
+                                break;
+                            case 2:
+                                Double doanhso = 0.0;
+                                do {
+
+                                    try {
+                                        System.out.print(">> Nhap doanh so tiep thi: ");
+                                        doanhso = Double.parseDouble(sc.nextLine());
+                                        break;
+                                    } catch (Exception e) {
+                                        System.out.print("Vui long nhap lai!\n");
+                                    }
+                                } while (true);
+                                NhanVien nvtt = new TiepThi(item.getManv(), item.getHoten(), item.getLuong(), "Tiep Thi", doanhso);
+                                nhanvien.set(flag, nvtt);
+                                break;
+                            case 3:
+                                NhanVien nvhc = new NhanVien(item.getManv(), item.getHoten(), item.getLuong(), "Hanh Chinh");
+                                nhanvien.set(flag, nvhc);
+                                break;
+                            default:
+                                System.out.println("Khong hop le! Nhap lai");
+                                temp++;
+                                break;
+                        }
                     }
-                } while (true);
+                        break;
+                    default:
+                        System.out.println("So Khong Hop Le!");
+                        break;
+                }
 
             }
             flag++;
+        }
+        if (temp0 == 0) {
+            System.out.println(">>> Ma nhan vien khong ton tai! <<<");
         }
     }
 
     /* ================== TIM NHAN VIEN THEO KHOANG LUONG ==================== */
     public void TimNVTheoLuong() {
-        int temp = 1,temp1=0;
+        int temp = 1, temp1 = 0;
         System.out.print(">> Nhap khoang luong toi thieu: ");
         Double min = Double.parseDouble(sc.nextLine());
 
@@ -241,7 +318,7 @@ public class Control extends NhanVien {
                 temp++;
             }
         }
-        if(temp1 == 0 ){
+        if (temp1 == 0) {
             System.out.println(">>> KHONG TIM THAY NHAN VIEN PHU HOP! <<<");
         }
     }
@@ -266,7 +343,7 @@ public class Control extends NhanVien {
         }
 
     }
-    /* ================== SAP XEP THEO THU NHAP ==================== */
+    /* ===================== SAP XEP THEO THU NHAP ====================== */
 
     public void SapXepTheoTHUNHAP() {
         Comparator<NhanVien> comp = new Comparator<NhanVien>() {
@@ -286,7 +363,9 @@ public class Control extends NhanVien {
             temp++;
         }
     }
-    /* ================== SAP XEP THEO HO VA TEN ==================== */
+    /*
+     * ================== XUAT 5 NHAN VIEN CO THU NHAP CAO NHAT ====================
+     */
 
     public void ThuNhapCaoNhat() {
         Comparator<NhanVien> comp = new Comparator<NhanVien>() {
