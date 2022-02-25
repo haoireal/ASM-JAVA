@@ -44,9 +44,6 @@ public class NhanVien {
         return luong;
     }
 
-  
-
- 
     public void setManv() {
         System.out.print(">> Nhap ma nhan vien cap nhat: ");
         this.manv = sc.nextLine();
@@ -108,23 +105,32 @@ public class NhanVien {
 
     /* ================== CAP NHAT HO TEN ==================== */
     public void CapNhatTheoYC() {
-        System.out.println("\t\t1. Cap nhat ma nhan vien");
-        System.out.println("\t\t2. Cap nhat ten nhan vien");
-        System.out.println("\t\t3. Cap nhat luong nhan vien");
-        int key = (int) Double.parseDouble(sc.nextLine());
-        switch (key) {
-            case 1:
-                this.setManv();
+        while (true) {
+            System.out.println("\t\t0. THOAT CAP NHAT");
+            System.out.println("\t\t1. Cap nhat ma nhan vien");
+            System.out.println("\t\t2. Cap nhat ten nhan vien");
+            System.out.println("\t\t3. Cap nhat luong nhan vien");
+            int key = (int) Double.parseDouble(sc.nextLine());
+            switch (key) {
+                case 0: 
+                    break;
+                case 1:
+                    this.setManv();
+                    break;
+                case 2:
+                    this.setHoten();
+                    break;
+                case 3:
+                    this.setLuong();
+                    break;
+                default:
+                    System.out.println("\t>>> KHONG HOP LE! <<<");
+                    break;
+            }
+            if (key == 0) {
                 break;
-            case 2:
-                this.setHoten();
-                break;
-            case 3:
-                this.setLuong();
-                break;
-            default:
-                System.out.println("\t>>> KHONG HOP LE! <<<");
-                break;
+            }
+            
         }
     }
 }
